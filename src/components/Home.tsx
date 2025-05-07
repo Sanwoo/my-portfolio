@@ -3,6 +3,8 @@ import { CardItem, CardBody, CardContainer } from "@/components/ui/3d-card";
 import { AuroraText } from "@/components/magicui/aurora-text";
 import Typed from "typed.js";
 import avatorJPG from "../assets/avator.jpg";
+import { motion } from "motion/react";
+import slideUp from "@/utils/slideUp";
 
 const Home: React.FC = () => {
   const el = useRef<HTMLSpanElement>(null);
@@ -30,7 +32,12 @@ const Home: React.FC = () => {
       className="flex-grow flex flex-row justify-around items-center"
       id="Home"
     >
-      <div className="flex flex-col justify-center items-start gap-6">
+      <motion.div
+        variants={slideUp(0.7)}
+        initial="initial"
+        whileInView="animate"
+        className="flex flex-col justify-center items-start gap-6"
+      >
         <span className="font-semibold text-5xl text-violet-950">
           Hi There,
         </span>
@@ -43,17 +50,23 @@ const Home: React.FC = () => {
         <span className="font-semibold text-3xl text-balck">
           A <span ref={el} className="text-red-900"></span>
         </span>
-      </div>
-      <CardContainer>
-        <CardBody>
-          <CardItem>
-            <img
-              src={avatorJPG}
-              className="rounded-full hover:shadow-2xl hover:shadow-gray-500"
-            />
-          </CardItem>
-        </CardBody>
-      </CardContainer>
+      </motion.div>
+      <motion.div
+        variants={slideUp(0.9)}
+        initial="initial"
+        whileInView="animate"
+      >
+        <CardContainer>
+          <CardBody>
+            <CardItem>
+              <img
+                src={avatorJPG}
+                className="rounded-full hover:shadow-2xl hover:shadow-gray-500"
+              />
+            </CardItem>
+          </CardBody>
+        </CardContainer>
+      </motion.div>
     </section>
   );
 };

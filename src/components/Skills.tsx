@@ -1,6 +1,8 @@
-import React, { forwardRef, useRef } from "react";
+import React, { forwardRef, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { AnimatedBeam } from "@/components/magicui/animated-beam";
+import { motion } from "motion/react";
+import slideUp from "@/utils/slideUp";
 
 const Circle = forwardRef<
   HTMLDivElement,
@@ -11,7 +13,7 @@ const Circle = forwardRef<
   }
 >(({ className, children, onClick }, ref) => {
   return (
-    <div
+    <motion.div
       ref={ref}
       onClick={onClick}
       className={cn(
@@ -20,7 +22,7 @@ const Circle = forwardRef<
       )}
     >
       {children}
-    </div>
+    </motion.div>
   );
 });
 
@@ -35,6 +37,8 @@ const Skills: React.FC = () => {
   const div5Ref = useRef<HTMLDivElement>(null);
   const div6Ref = useRef<HTMLDivElement>(null);
   const div7Ref = useRef<HTMLDivElement>(null);
+
+  const [isAnimationCompleted, setIsAnimationCompleted] = useState(false);
 
   const urlMap = new Map([
     ["typescriptSVG", "https://www.typescriptlang.org/docs/"],
@@ -62,11 +66,22 @@ const Skills: React.FC = () => {
       ref={containerRef}
       id="Skills"
     >
-      <span className="text-red-900 font-semibold text-5xl p-25">
+      <motion.span
+        variants={slideUp(0.5)}
+        initial="initial"
+        whileInView="animate"
+        className="text-red-900 font-semibold text-5xl p-25"
+      >
         Skills
         <span className="text-blue-950"> & Abilities</span>
-      </span>
-      <div className="flex size-full max-h-[400px] max-w-2xl flex-col items-stretch justify-between gap-10">
+      </motion.span>
+      <motion.div
+        variants={slideUp(0.7)}
+        initial="initial"
+        whileInView="animate"
+        onAnimationComplete={() => setIsAnimationCompleted(true)}
+        className="flex size-full max-h-[400px] max-w-2xl flex-col items-stretch justify-between gap-10"
+      >
         <div className="flex flex-row items-center justify-between">
           <Circle ref={div1Ref} onClick={() => clickSVG("typescriptSVG")}>
             <Icons.typescriptSVG />
@@ -94,49 +109,57 @@ const Skills: React.FC = () => {
             <Icons.html5SVG />
           </Circle>
         </div>
-      </div>
-
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div1Ref}
-        toRef={div4Ref}
-        curvature={-100}
-        endYOffset={-10}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div2Ref}
-        toRef={div4Ref}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div3Ref}
-        toRef={div4Ref}
-        curvature={100}
-        endYOffset={10}
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div5Ref}
-        toRef={div4Ref}
-        curvature={-100}
-        endYOffset={-10}
-        reverse
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div6Ref}
-        toRef={div4Ref}
-        reverse
-      />
-      <AnimatedBeam
-        containerRef={containerRef}
-        fromRef={div7Ref}
-        toRef={div4Ref}
-        curvature={100}
-        endYOffset={10}
-        reverse
-      />
+      </motion.div>
+      {isAnimationCompleted && (
+        // 控制AnimatedBeam在Circle动画结束后再渲染，否则会因为slideUp动画出现错位
+        <motion.div
+          variants={slideUp(0.8)}
+          initial="initial"
+          whileInView="animate"
+        >
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={div1Ref}
+            toRef={div4Ref}
+            curvature={-100}
+            endYOffset={-10}
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={div2Ref}
+            toRef={div4Ref}
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={div3Ref}
+            toRef={div4Ref}
+            curvature={100}
+            endYOffset={10}
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={div5Ref}
+            toRef={div4Ref}
+            curvature={-100}
+            endYOffset={-10}
+            reverse
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={div6Ref}
+            toRef={div4Ref}
+            reverse
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={div7Ref}
+            toRef={div4Ref}
+            curvature={100}
+            endYOffset={10}
+            reverse
+          />
+        </motion.div>
+      )}
     </section>
   );
 };

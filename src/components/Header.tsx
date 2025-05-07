@@ -12,6 +12,8 @@ import {
 import { useState } from "react";
 import { scroller } from "react-scroll";
 import avatorJPG from "../assets/avator.jpg";
+import { motion } from "motion/react";
+import slideUp from "@/utils/slideUp";
 
 const Header = () => {
   const navItems = [
@@ -43,7 +45,12 @@ const Header = () => {
   };
 
   return (
-    <div className="w-full z-10 fixed">
+    <motion.div
+      variants={slideUp(0.5)}
+      initial="initial"
+      whileInView="animate"
+      className="w-full z-10 fixed"
+    >
       <Navbar>
         {/* Desktop Navigation */}
         <NavBody>
@@ -100,7 +107,7 @@ const Header = () => {
           </MobileNavMenu>
         </MobileNav>
       </Navbar>
-    </div>
+    </motion.div>
   );
 };
 
