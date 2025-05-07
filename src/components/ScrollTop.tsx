@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { IconArrowUp } from "@tabler/icons-react";
 import {
   motion,

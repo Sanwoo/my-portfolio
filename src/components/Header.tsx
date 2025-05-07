@@ -44,6 +44,16 @@ const Header = () => {
     });
   };
 
+  const handleDownloadResume = () => {
+    const url = "/public/李家辉Web前端.pdf";
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "李家辉-Web前端.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <motion.div
       variants={slideUp(0.5)}
@@ -60,7 +70,9 @@ const Header = () => {
             onItemClick={(item) => handleScrollTo(item.link)}
           />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="primary">Resume</NavbarButton>
+            <NavbarButton variant="primary" onClick={handleDownloadResume}>
+              Resume
+            </NavbarButton>
           </div>
         </NavBody>
 
@@ -82,7 +94,11 @@ const Header = () => {
               <a
                 key={`mobile-link-${idx}`}
                 href={item.link}
-                onClick={() => setIsMobileMenuOpen(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleScrollTo(item.link);
+                  setIsMobileMenuOpen(false);
+                }}
                 className="relative text-neutral-600 dark:text-neutral-300"
               >
                 <span className="block">{item.name}</span>
@@ -100,6 +116,7 @@ const Header = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"
                 className="w-full"
+                onClickCapture={handleDownloadResume}
               >
                 Resume
               </NavbarButton>

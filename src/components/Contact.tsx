@@ -23,16 +23,16 @@ const Contact: React.FC = () => {
   };
   return (
     <section
-      className="relative min-h-screen bg-[#ecfeff] overflow-hidden"
+      className="relative min-h-screen bg-[#ecfeff] overflow-hidden py-8 md:py-0"
       id="Contact"
     >
       <Meteors number={25} />
-      <div className="container m-auto flex flex-col items-center">
+      <div className="container mx-auto px-4 flex flex-col items-center">
         <motion.span
           variants={slideUp(0.5)}
           initial="initial"
           whileInView="animate"
-          className="p-20 font-semibold text-5xl text-cyan-500"
+          className="p-8 md:p-20 font-semibold text-3xl md:text-5xl text-cyan-500 text-center"
         >
           Get In Touch
         </motion.span>
@@ -40,16 +40,16 @@ const Contact: React.FC = () => {
           variants={slideUp(0.7)}
           initial="initial"
           whileInView="animate"
-          className="flex flex-row w-full justify-around"
+          className="flex flex-col md:flex-row w-full justify-center md:justify-around items-center gap-10 md:gap-0"
         >
-          <EmailForm className="w-md" />
-          <div className="flex flex-col items-center justify-center gap-10">
-            <span className="text-blue-950 font-semibold text-3xl">
+          <EmailForm className="w-full md:w-md max-w-md" />
+          <div className="flex flex-col items-center justify-center gap-6 md:gap-10 mt-8 md:mt-0">
+            <span className="text-blue-950 font-semibold text-2xl md:text-3xl text-center">
               Add me if u want
             </span>
             <Marquee
               pauseOnHover
-              className="flex flex-row justify-center items-center w-90"
+              className="flex flex-row justify-center items-center w-full md:w-90"
             >
               <div
                 className="hover:cursor-pointer hover:scale-110 duration-350"

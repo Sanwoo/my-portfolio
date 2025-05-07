@@ -29,25 +29,27 @@ const Home: React.FC = () => {
   }, []);
   return (
     <section
-      className="flex-grow flex flex-row justify-around items-center"
+      className="flex-grow flex flex-col md:flex-row justify-center md:justify-around md:items-center"
       id="Home"
     >
       <motion.div
         variants={slideUp(0.7)}
         initial="initial"
         whileInView="animate"
-        className="flex flex-col justify-center items-start gap-6"
+        className="flex flex-col justify-center items-center md:items-start gap-6"
       >
-        <span className="font-semibold text-5xl text-violet-950">
+        <span className="font-semibold text-2xl md:text-5xl text-violet-950">
           Hi There,
         </span>
         <div className="flex flex-row">
-          <span className="text-violet-950 font-semibold text-5xl">
+          <span className="text-violet-950 font-semibold text-2xl md:text-5xl">
             I'm Li JiaHui
           </span>
-          <AuroraText className="font-semibold text-5xl">/Ounce</AuroraText>
+          <AuroraText className="font-semibold text-2xl md:text-5xl">
+            /Ounce
+          </AuroraText>
         </div>
-        <span className="font-semibold text-3xl text-balck">
+        <span className="font-semibold text-2xl md:text-3xl text-balck">
           A <span ref={el} className="text-red-900"></span>
         </span>
       </motion.div>

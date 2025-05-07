@@ -127,13 +127,15 @@ const EmailForm = ({ className }: { className: string }) => {
             </FormItem>
           )}
         />
-        <Button
-          className="hover:cursor-pointer"
-          type="submit"
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Sending" : "Submit"}
-        </Button>
+        <div className="flex justify-center md:justify-start">
+          <Button
+            className="hover:cursor-pointer"
+            type="submit"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Sending" : "Submit"}
+          </Button>
+        </div>
       </form>
     </Form>
   );
