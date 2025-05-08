@@ -11,12 +11,12 @@ const About: React.FC = () => {
           variants={slideUp(0.4)}
           initial="initial"
           whileInView="animate"
-          className="text-blue-950 font-semibold text-3xl md:text-5xl text-center mb-6 md:mb-10"
+          className="text-blue-950 font-semibold text-3xl md:text-5xl text-center mb-6 md:mb-25"
         >
           Something About <span className="text-orange-500">Me</span>
         </motion.span>
         <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-          <div className="flex flex-col gap-3 w-full md:w-2/3 justify-center order-2 md:order-1 text-center md:text-left">
+          <div className="flex flex-col gap-3 w-full md:w-2/3 md:pl-30 justify-center order-2 md:order-1 text-center md:text-left">
             <motion.span
               variants={slideUp(0.5)}
               initial="initial"

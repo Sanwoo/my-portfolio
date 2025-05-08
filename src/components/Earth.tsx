@@ -109,7 +109,7 @@ const Earth: React.FC<RotatingEarthProps> = ({ width, height }) => {
     scene.add(sunLight);
 
     // 创建地球
-    const earthGeometry = new THREE.SphereGeometry(1, 128, 128);
+    const earthGeometry = new THREE.SphereGeometry(1, 32, 32);
 
     // 创建地球纹理层
     const textureLoader = new THREE.TextureLoader();
@@ -202,7 +202,7 @@ const Earth: React.FC<RotatingEarthProps> = ({ width, height }) => {
     scene.add(earth);
 
     // 创建云球
-    const cloudGeometry = new THREE.SphereGeometry(1.005, 128, 128);
+    const cloudGeometry = new THREE.SphereGeometry(1.005, 32, 32);
 
     // 创建云纹理层
     const cloudTexture = textureLoader.load(cloudPNG);

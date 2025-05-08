@@ -6,6 +6,7 @@ import About from "./components/About";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import ScrollTop from "./components/ScrollTop";
+import AiChatBot from "./components/AiChatBot";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
       <Skills />
       <Contact />
       <ScrollTop />
+      <AiChatBot />
     </div>
   );
 };

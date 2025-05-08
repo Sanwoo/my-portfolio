@@ -113,7 +113,7 @@ const Skills: React.FC = () => {
       {isAnimationCompleted && (
         // 控制AnimatedBeam在Circle动画结束后再渲染，否则会因为slideUp动画出现错位
         <motion.div
-          variants={slideUp(0.8)}
+          variants={slideUp(0.5)}
           initial="initial"
           whileInView="animate"
         >
