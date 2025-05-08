@@ -8,6 +8,7 @@ import {
 } from "motion/react";
 import { scroller } from "react-scroll";
 
+// 点击回到页面顶部
 const ScrollToTop: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   // 监听滚动超过300时显示按钮
@@ -38,7 +39,6 @@ const ScrollToTop: React.FC = () => {
           exit={{ opacity: 0, scale: 0.8 }}
           onClick={scrollToTop}
           className="hover:cursor-pointer fixed bottom-4 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-violet-600 text-white shadow-lg transition-colors hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-400 focus:ring-offset-2"
-          aria-label="回到顶部"
         >
           <IconArrowUp size={20} />
         </motion.button>

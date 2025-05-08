@@ -40,6 +40,7 @@ const Skills: React.FC = () => {
 
   const [isAnimationCompleted, setIsAnimationCompleted] = useState(false);
 
+  // 点击图片跳转
   const urlMap = new Map([
     ["typescriptSVG", "https://www.typescriptlang.org/docs/"],
     [

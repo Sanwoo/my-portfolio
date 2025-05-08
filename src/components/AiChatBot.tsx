@@ -166,7 +166,6 @@ const AiChatBot: React.FC = () => {
           </svg>
         </motion.button>
 
-        {/* 对话窗口 */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
@@ -181,7 +180,6 @@ const AiChatBot: React.FC = () => {
                 <button
                   onClick={toggleChat}
                   className="text-white hover:text-gray-200 transition-colors hover:cursor-pointer"
-                  aria-label="关闭聊天"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +245,7 @@ const AiChatBot: React.FC = () => {
                   onKeyDown={handleKeyDown}
                   placeholder={
                     messageHistory.length
-                      ? "↑↓ to Switch historical input"
+                      ? "↑↓ to switch historical input"
                       : "Say something..."
                   }
                   className="flex-1 border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"

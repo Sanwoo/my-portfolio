@@ -10,6 +10,7 @@ const Home: React.FC = () => {
   const el = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
+    // typedjs实现打字效果
     const typed = new Typed(el.current, {
       strings: [
         "Frontend Developer",

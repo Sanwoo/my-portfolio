@@ -62,7 +62,7 @@ const Header = () => {
       className="w-full z-10 fixed"
     >
       <Navbar>
-        {/* Desktop Navigation */}
+        {/* 桌面端 */}
         <NavBody>
           <NavbarLogo img={avatorJPG} name="Ounce" />
           <NavItems
@@ -76,7 +76,7 @@ const Header = () => {
           </div>
         </NavBody>
 
-        {/* Mobile Navigation */}
+        {/* 手机端 */}
         <MobileNav>
           <MobileNavHeader>
             <NavbarLogo img={avatorJPG} name="Ounce" />
@@ -105,13 +105,6 @@ const Header = () => {
               </a>
             ))}
             <div className="flex w-full flex-col gap-4">
-              {/* <NavbarButton
-                onClick={() => setIsMobileMenuOpen(false)}
-                variant="primary"
-                className="w-full"
-              >
-                Login
-              </NavbarButton> */}
               <NavbarButton
                 onClick={() => setIsMobileMenuOpen(false)}
                 variant="primary"

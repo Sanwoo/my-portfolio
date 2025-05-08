@@ -1,6 +1,6 @@
 import { useEffect, useRef, RefObject } from "react";
 
-// 将函数handler传入useClickOutside，返回一个ref，将ref赋给某个元素，点击该元素外部的适合就会触发函数handler
+// 将函数handler传入useClickOutside，返回一个ref，将ref赋给某个元素，点击该元素外部时就会触发函数handler
 const useClickOutside = <T extends HTMLElement>(
   handler: (event: MouseEvent | TouchEvent) => void
 ): RefObject<T | null> => {
@@ -26,7 +26,7 @@ const useClickOutside = <T extends HTMLElement>(
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
     };
-  }, [handler]); // 依赖项包括 handler
+  }, [handler]);
 
   return ref;
 };

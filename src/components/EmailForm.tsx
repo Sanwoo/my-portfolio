@@ -38,6 +38,7 @@ const EmailForm = ({ className }: { className: string }) => {
     mode: "onChange",
   });
 
+  // 提交触发函数
   const onSubmit = async () => {
     try {
       setIsSubmitting(true);
@@ -47,6 +48,7 @@ const EmailForm = ({ className }: { className: string }) => {
         ref.current!,
         { publicKey: "2SGQsSp3QjRWchyNk" }
       );
+      // 成功后触发
       if (res.status === 200) {
         toast("Email sent successfully", {
           description: "Thank u for ur message, will reply soon",
@@ -58,6 +60,7 @@ const EmailForm = ({ className }: { className: string }) => {
       }
       form.reset();
     } catch (error) {
+      // 捕获错误
       console.error(error);
       toast("Something went wrong", {
         description: "Please try again later",

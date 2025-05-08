@@ -53,6 +53,7 @@ const About: React.FC = () => {
               Email: sanwoo1277255458@gmail.com
             </motion.span>
           </div>
+          {/* 地球仪 */}
           <motion.div
             variants={slideUp(0.9)}
             initial="initial"

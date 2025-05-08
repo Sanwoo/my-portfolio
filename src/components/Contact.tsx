@@ -6,16 +6,14 @@ import { motion } from "motion/react";
 import slideUp from "@/utils/slideUp";
 
 const Contact: React.FC = () => {
+  // 点击图片跳转
+  const map = new Map([
+    ["bilibili", "https://space.bilibili.com/37161805?spm_id_from=333.337.0.0"],
+    ["x", "https://x.com/SHANMUXXX"],
+    ["wechat", "/public/wechat.png"],
+    ["telegram", "https://t.me/SanwooXx"],
+  ]);
   const clickSVG = (svg: string) => {
-    const map = new Map([
-      [
-        "bilibili",
-        "https://space.bilibili.com/37161805?spm_id_from=333.337.0.0",
-      ],
-      ["x", "https://x.com/SHANMUXXX"],
-      ["wechat", "/public/wechat.png"],
-      ["telegram", "https://t.me/SanwooXx"],
-    ]);
     const url = map.get(svg);
     if (url) {
       window.open(url, "_blank");
