@@ -1,54 +1,28 @@
-# React + TypeScript + Vite
+# Portfolio of Ounce
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project completion thought process
 
-Currently, two official plugins are available:
+This is a portfolio page made by Ounce in few days according to the recruitment requirements of Immortal Dragons company.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+At the beginning of all, I noticed the part related to the effectiveness of the written test requirements, so I started learning the basic usage of Three.js and found some earth texture maps online.Then the Earth.tsx component was created.
 
-## Expanding the ESLint configuration
+After that, I started making the main body of the webpage, mainly consisting of four sections and some animation effects. Among them, I utilized Shadcn UI and some of its derivative UI libraries, as well as motion/react.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+After completing all of this, I used Tailwindcss to perform some simple mobile adaptation on the webpage as required
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+At the same time, the AI assistant dialogue function in the bottom left corner of the page has been implemented, and the Deepseek model has been integrated. Click to experience it
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Due to limited development time, many interesting ideas have not yet been implemented and added to the page. I will continue to improve them in the future when I have time
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Main technology stack
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+React + Typescript + Tailwindcss + motion + Shadcn UI + Three.js + Email.js
+
+## Project initiation instruction and preview address
+
+https://my-portfolio-psi-seven-48.vercel.app/
+
+```powershell
+npm i
+npm run dev
 ```
