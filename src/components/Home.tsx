@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   }, []);
   return (
     <section
-      className="flex-grow flex flex-col md:flex-row justify-center md:justify-around md:items-center"
+      className="flex-grow flex flex-col md:flex-row justify-center md:justify-around items-center"
       id="Home"
     >
       <motion.div
@@ -57,6 +57,7 @@ const Home: React.FC = () => {
         variants={slideUp(0.9)}
         initial="initial"
         whileInView="animate"
+        className="w-48 md:w-64 max-w-full h-auto"
       >
         <CardContainer>
           <CardBody>
