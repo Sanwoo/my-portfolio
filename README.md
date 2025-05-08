@@ -22,7 +22,7 @@ React + Typescript + Tailwindcss + motion + Shadcn UI + Three.js + Email.js
 
 https://my-portfolio-psi-seven-48.vercel.app/
 
-```powershell
+```
 npm i
 npm run dev
 ```
