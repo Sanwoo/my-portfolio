@@ -1,9 +1,10 @@
-import React from "react";
-import Earth from "../components/Earth";
+import React, { lazy, Suspense } from "react";
+// import Earth from "../components/Earth";
 import { motion } from "motion/react";
 import slideUp from "@/utils/slideUp";
 
 const About: React.FC = () => {
+  const Earth = lazy(() => import("../components/Earth"));
   return (
     <section className="min-h-screen bg-[#e2e8f0] py-16" id="About">
       <div className="container mx-auto px-4 flex flex-col justify-center items-center gap-8 md:gap-12">
@@ -60,7 +61,9 @@ const About: React.FC = () => {
             whileInView="animate"
             className="order-1 md:order-2 w-full md:w-1/3 flex justify-center"
           >
-            <Earth width="280px" height="280px" />
+            <Suspense>
+              <Earth width="280px" height="280px" />
+            </Suspense>
           </motion.div>
         </div>
       </div>

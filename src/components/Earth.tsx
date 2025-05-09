@@ -74,9 +74,10 @@ const Earth: React.FC<RotatingEarthProps> = ({ width, height }) => {
 
     // 创造renderer
     const renderer = new THREE.WebGLRenderer({
-      antialias: true, // 确保抗锯齿开启
+      antialias: window.devicePixelRatio < 2, // 只在低DPI设备上启用抗锯齿
       alpha: true,
-      precision: "highp", // 使用高精度渲染
+      precision: "mediump", // 使用中等精度以提高性能
+      powerPreference: "high-performance", // 请求高性能GPU模式
     });
     renderer.setPixelRatio(window.devicePixelRatio); // 适应设备像素比
     renderer.setSize(
@@ -226,12 +227,10 @@ const Earth: React.FC<RotatingEarthProps> = ({ width, height }) => {
       const markerGeometry = new THREE.ConeGeometry(marker.size, 0.4, 16);
 
       // 创建发光材质
-      const markerMaterial = new THREE.MeshStandardMaterial({
+      const markerMaterial = new THREE.MeshBasicMaterial({
         color: marker.color,
         transparent: true,
         opacity: 0.7,
-        emissive: marker.color,
-        emissiveIntensity: 1.5,
       });
 
       // 创建标记网格
@@ -248,82 +247,129 @@ const Earth: React.FC<RotatingEarthProps> = ({ width, height }) => {
     const animate = () => {
       animationRef.current = requestAnimationFrame(animate);
 
-      earth.rotation.y += parameters.earthRotationSpeed;
-      cloud.rotation.y += parameters.cloudRotationSpeed;
+      // 只有当场景可见或发生变化时才渲染
+      if (isVisible || needsUpdate) {
+        earth.rotation.y += parameters.earthRotationSpeed;
+        cloud.rotation.y += parameters.cloudRotationSpeed;
 
-      // 更新标记点位置，使其跟随地球旋转
-      markersRef.current.forEach((marker) => {
-        if (marker.mesh) {
-          // 计算标记在地球表面的位置
-          const position = latLongToVector3(
-            marker.latitude,
-            marker.longitude,
-            1.01
-          );
+        // 更新标记点位置，使其跟随地球旋转
+        // 优化：减少每帧的计算量
+        let frameCount = 0;
+        markersRef.current.forEach((marker) => {
+          if (marker.mesh) {
+            // 每3帧更新一次标记位置，而不是每帧都更新
+            if (frameCount % 3 === 0) {
+              // 计算标记在地球表面的位置
+              const position = latLongToVector3(
+                marker.latitude,
+                marker.longitude,
+                1.01
+              );
 
-          // 应用地球的旋转
-          position.applyAxisAngle(new THREE.Vector3(0, 1, 0), earth.rotation.y);
+              // 应用地球的旋转
+              position.applyAxisAngle(
+                new THREE.Vector3(0, 1, 0),
+                earth.rotation.y
+              );
 
-          // 计算从地球中心到标记点的方向向量
-          const direction = position.clone().normalize();
+              // 计算从地球中心到标记点的方向向量
+              const direction = position.clone().normalize();
 
-          // 创建一个向上的向量
-          const up = new THREE.Vector3(0, 1, 0);
+              // 创建一个向上的向量
+              const up = new THREE.Vector3(0, 1, 0);
 
-          // 创建一个四元数，使圆锥朝向地球表面法线方向
-          const quaternion = new THREE.Quaternion();
-          quaternion.setFromUnitVectors(up, direction);
+              // 创建一个四元数，使圆锥朝向地球表面法线方向
+              const quaternion = new THREE.Quaternion();
+              quaternion.setFromUnitVectors(up, direction);
 
-          // 更新标记位置和旋转
-          marker.mesh.position.copy(position);
-          marker.mesh.setRotationFromQuaternion(quaternion);
-        }
-      });
+              // 更新标记位置和旋转
+              marker.mesh.position.copy(position);
+              marker.mesh.setRotationFromQuaternion(quaternion);
+            }
+          }
+        });
+        frameCount = (frameCount + 1) % 60; // 重置计数器
 
-      controls.update();
-
-      renderer.render(scene, camera);
+        controls.update();
+        renderer.render(scene, camera);
+        needsUpdate = false;
+      }
     };
+
+    // 添加可见性检测
+    let isVisible = true;
+    let needsUpdate = true;
+
+    // 使用Intersection Observer检测元素可见性
+    const observer = new IntersectionObserver(
+      (entries) => {
+        isVisible = entries[0].isIntersecting;
+        if (isVisible) needsUpdate = true;
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
     animate();
 
+    // 在组件卸载时彻底清理资源
     return () => {
       // 取消动画
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
         animationRef.current = null;
       }
-
+    
+      // 取消观察者
+      if (observer) {
+        observer.disconnect();
+      }
+    
       // 释放资源
-      scene.clear();
-
-      // 释放几何体、材质、纹理层
-      earthGeometry.dispose();
-      earthMaterial.dispose();
-      earthTexture.dispose();
-      earthNightTexture.dispose();
-      bumpTexture.dispose();
-
-      cloudGeometry.dispose();
-      cloudMaterial.dispose();
-      cloudTexture.dispose();
-
-      // 释放标记点资源
-      markersRef.current.forEach((marker) => {
-        if (marker.mesh) {
-          marker.mesh.geometry.dispose();
-          (marker.mesh.material as THREE.Material).dispose();
+      if (sceneRef.current) {
+        // 递归处理场景中的所有对象
+        sceneRef.current.traverse((object) => {
+          if (object instanceof THREE.Mesh) {
+            if (object.geometry) {
+              object.geometry.dispose();
+            }
+            
+            if (object.material) {
+              if (Array.isArray(object.material)) {
+                object.material.forEach(material => disposeMaterial(material));
+              } else {
+                disposeMaterial(object.material);
+              }
+            }
+          }
+        });
+        
+        sceneRef.current.clear();
+      }
+      
+      // 辅助函数：处理材质释放
+      function disposeMaterial(material: THREE.Material) {
+        // 释放材质的所有纹理
+        for (const key in material) {
+          const value = (material as any)[key];
+          if (value && typeof value === 'object' && 'isTexture' in value) {
+            value.dispose();
+          }
         }
-      });
-
-      renderer.dispose();
-
-      // 移除renderer
-      if (
-        containerRef.current &&
-        renderer.domElement.parentNode === containerRef.current
-      ) {
-        containerRef.current.removeChild(renderer.domElement);
+        material.dispose();
+      }
+    
+      // 释放渲染器
+      if (renderer) {
+        renderer.dispose();
+        
+        // 移除renderer
+        if (containerRef.current && renderer.domElement.parentNode === containerRef.current) {
+          containerRef.current.removeChild(renderer.domElement);
+        }
       }
     };
   }, []);
